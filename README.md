@@ -151,6 +151,6 @@ py -m pytest
 
 ![予算と支出の比較](docs/images/budget-comparison.png)
 
-##　今後の予定
+## 今後の予定
 - Web上へのデプロイ
 
