@@ -1,0 +1,22 @@
+# Pythonが自動生成するファイル
+__pycache__/
+*.pyc
+
+# 仮想環境
+.venv/
+
+# SQLiteデータベース
+*.db
+
+#　アプリが自動生成するグラフ画像
+static/graphs/*.png
+
+# 環境変数ファイル
+.env
+
+# OSが自動生成するアフィル
+.DS_Store
+Thumbs.db
+
+# pytestで自動的に作られるキャッシュフォルダ
+.pytest_cache/

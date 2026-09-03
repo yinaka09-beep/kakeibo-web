@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}
+予算比較グラフ | 家計簿アプリ
+{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <h1>予算比較グラフ</h1>
+        <p>指定した月のカテゴリごとの予算と支出をグラフで比較します</p>
+    </section>
+
+    <div class="page-actions link-box">
+        <a 
+            class="backtop-link"
+            href="{{ url_for('index') }}">トップページへ戻る</a>
+    </div>
+
+    {% if errors %}
+        <div 
+            class="error-box link-box"
+            role="alert">
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form 
+        class="search-card"
+        method="post"
+    >
+        <div class="search-field">
+            <label class="form-label" for="month">年月</label>
+            <input 
+                class="form-control"
+                type="month" name="month" id="month" value="{{ month or '' }}"
+            >
+        </div>
+
+        <button
+            class="submit-button"
+            type="submit">
+            グラフ表示する
+        </button>
+    </form>
+
+    {% if data_exists is true %}
+        <section class="result-section">
+            <div class="result-header">
+                <h2>{{ month }}の予算比較</h2>
+
+                <a 
+                    class="text-link"
+                    href="{{ url_for('budget_comparison', month = month ) }}">
+                    表で見る
+                </a>
+            </div>
+        
+            <div class="graph-card">
+                <img
+                    class="graph-image"
+                    src="{{ url_for(
+                        'static',
+                        filename = 'graphs/' ~ graph_filename,
+                        v = graph_version
+                    )}}"
+                    alt="{{ month }}の予算比較グラフ"
+                >
+            </div>
+        </section>
+
+    {% elif data_exists is false %}
+        <p class="empty-message link-box">
+            指定された月には、予算も支出も登録されていません。
+        </p>
+    {% endif %}
+{% endblock %}

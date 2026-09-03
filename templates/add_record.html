@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}
+収入・支出登録 | 家計簿アプリ
+{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <h1>収入・支出登録</h1>
+        <p>新しい収入または支出を家計簿へ登録します</p>
+    </section>
+    
+    <div class="page-actions">
+        <a
+            class="text-link"
+            href="{{ url_for('records') }}">家計簿一覧を確認する
+        </a>
+        
+        <a 
+            class="backtop-link"
+            href="{{ url_for('index') }}">トップページへ戻る
+        </a>
+    </div>
+
+    {% if errors %}
+        <div 
+            id="form-errors"
+            class="error-box link-box"
+            role="alert"
+        >
+
+            <p>入力内容を確認してください</p>
+
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form 
+        class="form-card"
+        method="post"
+        action="#form-errors"
+        >
+
+        <div class="form-group">        
+            <label class="form-label" for="date">日付</label>
+            <input class="form-control" type="date" name="date" id="date" value="{{ date or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="kind">種類</label>
+            <select class="form-control" name="kind" id="kind">
+                <option value="支出" {% if kind == "支出" %}selected{% endif %}>支出</option>
+                <option value="収入" {% if kind == "収入" %}selected{% endif %}>収入</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="category">カテゴリ</label>
+            <input class="form-control" type="text" name="category" id="category" value="{{ category or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="amount">金額</label>
+            <input
+                class="form-control" 
+                type="number" name="amount" id="amount" min="1" value="{{ amount or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="memo">メモ</label>
+            <input 
+                class="form-control"
+                type="text" name="memo" id="memo" value="{{ memo or ''}}">
+        </div>
+
+        <div class="form-actions">
+            <button class="submit-button" type="submit">
+                登録する
+            </button>
+        </div>
+    </form>
+{% endblock %}

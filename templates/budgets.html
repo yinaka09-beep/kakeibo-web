@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+予算一覧 | 家計簿アプリ
+{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <h1>予算一覧</h1>
+        <p>登録済みの予算を確認し、編集・削除できます</p>
+    </section>
+
+    <div class="page-actions">
+        <a 
+            class="button-link"
+            href="{{ url_for('add_budget') }}">予算を登録・更新する
+        </a>
+        <a
+            class="backtop-link"
+            href="{{ url_for('index') }}">トップページへ戻る
+        </a>
+    </div>
+
+    {% if not budgets %}
+        <p class="empty-message">
+            まだ予算データがありません。
+        </p>
+    
+    {% else %}
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>年月</th>
+                        <th>カテゴリ</th>
+                        <th>予算金額(円)</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for budget_row in budgets %}
+                        <tr>
+                            <td>{{ budget_row[0] }}</td>
+                            <td>{{ budget_row[1] }}</td>
+                            <td>{{ budget_row[2] }}</td>
+                            <td>{{ budget_row[3] }}円</td>
+                            <td class="action-cell">
+                                <a 
+                                    class="text-link"
+                                    href="{{ url_for('edit_budget', budget_id = budget_row[0]) }}">
+                                    編集
+                                </a>
+                                
+                                <a 
+                                    class="text-link delete-link" 
+                                    href="{{ url_for('delete_budget', budget_id = budget_row[0]) }}">
+                                    削除
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

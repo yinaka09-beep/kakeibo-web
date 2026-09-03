@@ -1,0 +1,600 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0 auto;
+    background-color: #f5f6f8;
+    color: #333333;
+    font-family: 
+        "Yu-Gothic",
+        "Meiryo",
+        sans-serif;
+    line-height: 1.6;
+}
+
+.site-header {
+    background-color: #dddddd;
+    border-bottom: 1px solid #822b2b;
+}
+
+.header-inner {
+    width: min(calc(100% - 32px), 1000px);
+    margin: 0 auto;
+    padding: 16px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-title {
+    color: #333333;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.main-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.main-nav a {
+    color: #333333;
+    text-decoration: none;
+}
+
+.main-nav a:hover {
+    text-decoration:underline ;
+}
+
+.container {
+    width: min(calc(100% - 32px), 1000px);
+    min-height: calc(100vh - 160px);
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.site-footer {
+    padding: 16px;
+    border-top: 1px solid #dddddd;
+    background-color: #ffffff;
+    color: #666666;
+    text-align: center;
+}
+
+/* トップページの見出し部分*/
+.page-header {
+    margin-bottom: 32px;
+}
+
+.page-header h1 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 32px;
+}
+
+.page-header p {
+    margin: 0;
+    color: #666666;
+}
+
+/* 昨日カード全体の並び*/
+.feature-grid {
+    display:grid ;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+/* 一枚ずつのカード */
+.feature-card {
+    height: 100%;
+    padding: 24px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+}
+
+.feature-card h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #822b2b;
+    font-size: 20px;
+}
+
+/* カード内の機能一覧 */
+.feature-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.feature-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #822b2b;
+}
+
+.feature-list li:first-child {
+    padding-top: 0;
+}
+
+.feature-list li:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* 各機能へのリンク */
+.feature-link {
+    color: #245ea8;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.feature-link:visited {
+    color: #245ea8;
+}
+
+.feature-link:hover {
+    text-decoration: underline;
+}
+
+/* リンクの捕捉説明 */
+.feature-description {
+    margin: 6px 0 0;
+    color: #666666;
+    font-size: 14px;
+}
+
+/* 画面が狭い場合はカードを縦に並べる */
+@media (max-width: 850px) {
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-header h1 {
+        font-size: 26px;
+    }
+}
+
+/* ページ上部の操作ボタン */
+.page-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.backtop-link {
+    color: #245ea8;
+    text-decoration: none;
+}
+
+.backtop-link:visited {
+    color: #245ea8;
+}
+
+.backtop-link:hover {
+    color: #1d4d8b;
+    text-decoration: underline;
+}
+
+/* 登録画面などへ移動するボタン風リンク */
+.button-link {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: #245ea8;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.button-link:hover {
+    background-color: #1d4d8b;
+}
+
+.button-link:visited {
+    color: #ffffff;
+}
+
+/* 狭い画面で表を横スクロール可能にする */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+/* 一覧表 */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+}
+
+.data-table th,
+.data-table td {
+    padding: 8px 16px;
+    border-bottom: 1px solid #dddddd;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.data-table th {
+    background-color: #eef2f6;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.data-table tbody tr:hover {
+    background-color:  #e6e7ea;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* 編集・削除リンクの並び */
+.action-cell {
+    white-space: nowrap;
+}
+
+.text-link {
+    color: #245ea8;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.text-link:visited {
+    color: #245ea8;
+}
+
+.text-link:hover {
+text-decoration: underline;
+}
+
+.action-cell .text-link + .text-link {
+    margin-left: 8px;
+}
+
+.delete-link,
+.delete-link:visited {
+    color: #b42318;
+}
+
+/* データがない場合の表示 */
+.empty-message {
+    padding: 16px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #666666;
+}
+
+/* 別リンクの位置調整 */
+.link-box {
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+}
+
+/* 入力フォーム全体 */
+.form-card {
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+    padding: 24px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+/* 1項目ごとのまとまり */
+.form-group {
+    margin-bottom: 16px;
+}
+
+/* 入力項目の名前 */
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* inputとselectの共通デザイン */
+.form-control {
+    width: 100%;
+    padding: 8px 16px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #333333;
+    font: inherit;
+}
+
+/* 入力欄を選択した時 */
+.form-control:focus {
+    border-color: #245ea8;
+    outline: 2px solid rgba(36, 94, 168, 0.18);
+}
+
+.form-actions {
+    margin-top: 24px;
+}
+
+/* 登録・更新用ボタン */
+.submit-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #245ea8;
+    color: #ffffff;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #1d4d8b;
+}
+
+/* 入力エラー表示 */
+.error-box {
+    scroll-margin-top: 24px;
+    width: 100%;
+    max-width: 720px;
+    margin-bottom: 24px;
+    padding: 8px 16px;
+    border: 1px solid #e3a4a0;
+    border-radius: 8px;
+    background-color: #fff3f2;
+    color: #8a1c15;
+} 
+
+.error-box p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.error-box ul {
+    margin: 8px 0 0;
+    padding-left: 16px;
+}
+
+/* 削除確認画面全体 */
+.delete-card {
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+    padding: 24px;
+    border: 1px solid #e3a4a0;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+/* 削除前の警告 */
+.delete-warning {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #8a1c15;
+    font-weight: bold;
+}
+
+/* 詳細確認用の表 */
+.detail-table th {
+    width: 160px;
+}
+
+.detail-table td {
+    background-color: #ffffff;
+}
+
+/* 削除画面下部の操作 */
+.delete-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+/* 削除を中止するリンク */
+.cancel-link {
+    color: #245ea8;
+    text-decoration: none;
+}
+
+.cancel-link:hover {
+    color: #1d4d8b;
+    text-decoration: underline;
+}
+
+/* 削除実行ボタン */
+.delete-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #b42318;
+    color: #ffffff;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #8f1c13;
+}
+
+/* 狭い画面では操作を縦に並べる */
+@media (max-width: 600px) {
+    .delete-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .delete-button {
+        width: 100%;
+    }
+
+    .cancel-link {
+        text-align: center;
+    }
+}
+
+/* 月などを指定する検索フォーム */
+.search-card {
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+    margin-bottom: 24px;
+    padding: 24px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+/* 検索フォーム内の入力部分 */
+.search-field {
+    flex: 1;
+    margin-top: 0;
+}
+
+/* 集計結果全体 */
+.result-section {
+    width: 100%;
+    max-width: 720px;
+    margin: 32px auto 0;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.result-header h2 {
+    margin: 0;
+}
+
+/* 収入・支出・差額の並び */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 16px;
+}
+
+/* 集計結果が入るカード */
+.summary-item {
+    padding: 20px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+/* 収入などの項目名 */
+.summary-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #666666;
+    font-size: 14px;
+}
+
+/* 金額 */
+.summary-value {
+    display: block;
+    font-size: 24px;
+}
+
+/* 収入 */
+.income-value {
+    color: #245ea8;
+}
+
+/* 支出 */
+.expense-value {
+    color: #b42318;
+}
+
+/* 狭い画面で縦に並べる */
+@media (max-width: 600px) {
+    .search-card {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .search-card .submit-button {
+        width: 100%;
+    }
+
+    .result-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 予算達成状況の共通デザイン */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* 予算内 */
+.status-ok {
+    background-color: #e8f4ec;
+    color: #26733d;
+}
+
+/* 予算超過 */
+.status-over {
+    background-color: #fff0ef;
+    color: #b42318;
+}
+
+/* 予算未設定 */
+.status-unset {
+    background-color: #eef2f6;
+    color: #56606b;
+}
+
+/* グラフを囲むカード */
+.graph-card {
+    width: 100%;
+    padding: 18px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+/* グラフ画像 */
+.graph-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 600px) {
+    .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .main-nav {
+        flex-wrap: wrap;
+    }
+}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}
+予算削除 | 家計簿アプリ
+{% endblock %}
+
+{% block content %}
+
+    <section class="page-header">
+        <h1>予算データを削除する</h1>
+    </section>
+
+    <div class="delete-card">
+        <p class="delete-warning">
+            以下の予算データを削除します。<br>
+            この操作は元に戻せません。
+        </p>
+    
+        <div class="table-wrapper">
+            <table class="data-table detail-table">
+                <tbody>
+                    <tr>
+                        <th>id</th>
+                        <td>{{ budget_id }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>年月</th>
+                        <td>{{ month }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>カテゴリ</th>
+                        <td>{{ category }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>予算金額(円)</th>
+                        <td>{{ budget }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="delete-actions">
+            <a
+                class="cancel-link"
+                href="{{ url_for('budgets') }}">
+                削除せず、予算一覧へ戻る
+            </a>
+
+            <form method="post">
+                <button 
+                    class="delete-button"
+                    type="submit">削除する</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

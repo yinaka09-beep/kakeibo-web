@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}
+トップページ | 家計簿アプリ
+{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <h1>家計簿アプリ</h1>
+        <p>flaskで作成中の家計簿アプリです</p>
+    </section>
+
+    <div class="feature-grid">
+        
+        <section class="feature-card">
+            <h2>収入・支出管理</h2>
+
+                <ul class="feature-list">
+                    <li>
+                        <a 
+                            class="feature-link"
+                            href="{{ url_for('records') }}">
+                            家計簿一覧
+                        </a>
+                        <p class="feature-description">
+                            登録済みの収入・支出を確認し、編集・削除ができます
+                        </p>
+                    </li>
+                    <li>
+                        <a 
+                            class="feature-link"
+                            href="{{ url_for('add_record') }}">
+                            収入・支出登録
+                        </a>
+                        <p class="feature-description">
+                            新しい収入または支出を家計簿へ登録します
+                        </p>
+                    </li>    
+                </ul>
+        </section>
+
+        <section class="feature-card">
+            <h2>予算管理</h2>
+
+                <ul class="feature-list">
+                    <li>
+                        <a 
+                            class="feature-link"
+                            href="{{ url_for('budgets') }}">予算一覧
+                        </a>
+                        <p class="feature-description">
+                            登録済みの予算を確認し、編集・削除ができます
+                        </p>
+                    </li>
+
+                    <li>
+                        <a class="feature-link"
+                        href="{{ url_for('add_budget') }}">
+                        予算の登録・更新
+                        </a>
+                        <p class="feature-description">
+                            新しい予算を登録する。<br>
+                            すでに登録されている予算だった場合、金額だけ変更する
+                        </p>
+                    </li>
+                </ul>
+        </section>
+    
+        <section class="feature-card">
+            <h2>集計・分析</h2>
+
+                <ul class="feature-list">
+                    <li>
+                        <a 
+                            class="feature-link"
+                            href="{{ url_for('month_summary') }}">
+                            月別収支集計表
+                        </a>
+                        <p class="feature-description">
+                            指定した月の収入・支出・差額を確認します
+                        </p>
+                    </li>
+
+                    <li>
+                        <a
+                            class="feature-link"
+                            href="{{ url_for('month_summary_graph')}}">
+                            月別収支グラフ
+                        </a>
+                        <p class="feature-description">
+                            指定した月の収入・支出・差額をグラフで確認します。
+                        </p>
+                    </li>
+
+                    <li>
+                        <a 
+                            class="feature-link"
+                            href="{{ url_for('category_summary') }}">
+                            月のカテゴリ別支出集計表
+                        </a>
+                        <p class="feature-description">
+                            指定した月の支出をカテゴリ別に確認します。
+                        </p>
+                    </li>
+
+                    <li>
+                        <a 
+                            class="feature-link"
+                            href="{{ url_for('category_summary_graph') }}">
+                            月のカテゴリ別支出のグラフ
+                        </a>
+                        <p class="feature-description">
+                            指定した月の支出をカテゴリ別のグラフで確認します。
+                        </p>
+                    </li>
+
+                    <li>
+                        <a
+                            class="feature-link"
+                            href="{{ url_for('budget_comparison') }}">
+                            予算支出比較表
+                        </a>
+                        <p class="feature-description">
+                            指定した月について、カテゴリごとに予算と支出を比較します。
+                        </p>
+                    </li>
+
+                    <li>
+                        <a
+                            class="feature-link"
+                            href="{{ url_for('budget_comparison_graph') }}">
+                            予算支出比較グラフ
+                        </a>
+                        <p class="feature-description">
+                            指定した月のカテゴリごとの予算と支出をグラフで比較します
+                        </p>
+                    </li>
+                </ul>
+        </section>
+
+    </div>
+{% endblock %}

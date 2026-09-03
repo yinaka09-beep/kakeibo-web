@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}家計簿アプリ{% endblock %}
+    </title>
+    
+    <link 
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="site-title" href="{{ url_for('index') }}">
+                家計簿アプリ
+            </a>
+
+            <nav class="main-nav">
+                <a href="{{ url_for('records') }}">家計簿</a>
+                <a href="{{ url_for('budgets') }}">予算</a>
+                <a href="{{ url_for('month_summary') }}">集計</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <p>Python Flask 家計簿アプリ</p>
+    </footer>
+</body>
+</html>

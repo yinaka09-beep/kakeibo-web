@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}
+月のカテゴリ別支出集計表 | 家計簿アプリ
+{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <h1>月のカテゴリ別支出集計表</h1>
+        <p>指定した月の支出をカテゴリ別に確認します。</p>
+    </section>
+
+    <div class="page-actions link-box">
+        <a
+            class="backtop-link" 
+            href="{{ url_for('index') }}"
+        >
+            トップページへ戻る
+        </a>
+    </div>
+
+    {% if errors %}
+        <div 
+            class="error-box link-box"
+            role="alert">
+            <p>入力内容を確認してください。</p>
+            
+            <ul>
+                {% for error in errors%}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form 
+        class="search-card"
+        method="post"
+    >
+        <div class="search-field">
+        <label class="form-label" for="month">年月</label>
+        <input 
+            class="form-control"
+            type="month"
+            name="month"
+            id="month"
+            value="{{ month or '' }}"
+            >
+        </div>
+
+        <button
+            class="submit-button"
+            type="submit">集計する</button>
+    </form>
+
+    
+
+    {% if category_totals is not none %}
+        {% if category_totals %}
+            <section class="result-section">
+                <div class="result-header">
+                    <h2>{{ month }}のカテゴリ別支出</h2>
+
+                    <a 
+                        class="text-link"
+                        href="{{ url_for('category_summary_graph', month = month) }}">
+                        グラフで見る
+                    </a>
+                </div>
+            
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>カテゴリ</th>
+                                <th>金額</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for category, total in category_totals.items() %}
+                                <tr>
+                                    <td>{{ category }}</td>
+                                    <td>{{ total }}円</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+    
+        {% else %}
+            <p class="empty-message link-box">{{ month }} の家計簿データはありません </p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS records (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT NOT NULL,
+    kind TEXT NOT NULL,
+    category TEXT NOT NULL,
+    amount INTEGER NOT NULL,
+    memo TEXT
+);
+
+CREATE TABLE IF NOT EXISTS budgets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    month TEXT NOT NULL,
+    category TEXT NOT NULL,
+    budget INTEGER NOT NULL
+);

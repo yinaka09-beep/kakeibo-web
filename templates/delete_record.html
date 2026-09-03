@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}
+家計簿削除 | 家計簿アプリ
+{% endblock%}
+
+{% block content %}
+    <section class="page-header">
+        <h1>家計簿データ削除</h1>
+    </section>
+
+    <div class="delete-card">
+        <p class="delete-warning">
+            以下の家計簿データを削除します。<br>
+            この操作は元に戻せません。
+        </p>
+
+        <div class="table-wrapper">
+            <table class="data-table detail-table">
+                <tbody>
+                    <tr>
+                        <th>id</th>
+                        <td>{{ record[0] }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>日付</th>
+                        <td>{{ record[1] }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>種類</th>
+                        <td>{{ record[2] }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>カテゴリ</th>
+                        <td>{{ record[3] }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>金額</th>
+                        <td>{{ record[4] }}円</td>
+                    </tr>
+
+                    <tr>
+                        <th>メモ</th>
+                        <td>{{ record[5] or '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="delete-actions">
+            <a 
+                class="cancel-link"
+                href="{{ url_for('records') }}">
+                削除せず一覧へ戻る
+            </a>
+        
+
+            <form method="post">
+                <button 
+                    class="delete-button"
+                    type="submit">削除</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
