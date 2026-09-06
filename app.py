@@ -1,4 +1,4 @@
-import sqlite3
+import psycopg
 from datetime import datetime
 import os
 
@@ -12,7 +12,6 @@ from flask import Flask, render_template, request, redirect, url_for
 plt.rcParams["font.family"] = "Meiryo"
 plt.rcParams["axes.unicode_minus"] = False
 
-DB_NAME = "kakeibo_practice.db"
 GRAPH_FOLDER = os.path.join("static", "graphs")
 CATEGORY_GRAPH_NAME = "category_summary.png"
 MONTH_SUMMARY_GRAPH_NAME = "month_summary.png"
@@ -23,9 +22,10 @@ app = Flask(__name__)
 
 def connect_db():
     """
-    SQLiteデータベースに接続する。
+    PostgreSQLデータベースに接続する。
     """
-    conn = sqlite3.connect(DB_NAME)
+    database_url = os.environ["DATABASE_URL"]
+    conn = psycopg.connect(database_url)
     return conn
 
 
@@ -59,7 +59,7 @@ def get_record_by_id(record_id):
     cursor.execute("""
         SELECT id, date, kind, category, amount, memo
         FROM records
-        WHERE id = ?
+        WHERE id = %s
     """, (record_id,))
     
     record = cursor.fetchone()
@@ -78,7 +78,7 @@ def insert_record(date, kind, category, amount, memo):
     
     cursor.execute("""
         INSERT INTO records (date, kind, category, amount, memo)
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s, %s)
     """, (date, kind, category, amount, memo))
     
     conn.commit()
@@ -94,8 +94,8 @@ def update_record(record_id, date, kind, category, amount, memo):
     
     cursor.execute("""
         UPDATE records
-        SET date = ?, kind = ?, category = ?, amount = ?, memo = ?
-        WHERE id = ?
+        SET date = %s, kind = %s, category = %s, amount = %s, memo = %s
+        WHERE id = %s
     """, (date, kind, category, amount, memo, record_id))
     
     conn.commit()
@@ -111,7 +111,7 @@ def delete_record_by_id(record_id):
     
     cursor.execute("""
         DELETE FROM records
-        WHERE id = ?
+        WHERE id = %s
     """, (record_id,))
     
     conn.commit()
@@ -148,7 +148,7 @@ def get_budget_by_id(budget_id):
     cursor.execute("""
         SELECT id, month, category, budget
         FROM budgets
-        WHERE id = ?
+        WHERE id = %s
     """, (budget_id,))
     
     budget_row = cursor.fetchone()
@@ -170,14 +170,14 @@ def get_existing_budget(month, category, exclude_id=None):
         cursor.execute("""
             SELECT id, month, category, budget
             FROM budgets
-            WHERE month = ? AND category = ?
+            WHERE month = %s AND category = %s
         """, (month, category))
     
     else:
         cursor.execute("""
             SELECT id, month, category, budget
             FROM budgets
-            WHERE month = ? AND category = ? AND id != ?
+            WHERE month = %s AND category = %s AND id != %s
         """, (month, category, exclude_id))
     
     existing_budget = cursor.fetchone()
@@ -196,7 +196,7 @@ def insert_budget(month, category, budget):
     
     cursor.execute("""
         INSERT INTO budgets (month, category, budget)
-        VALUES (?, ?, ?)
+        VALUES (%s, %s, %s)
     """, (month, category, budget))
     
     conn.commit()
@@ -212,8 +212,8 @@ def update_budget_amount(month, category, budget):
     
     cursor.execute("""
         UPDATE budgets
-        SET budget = ?
-        WHERE month = ? AND category = ?
+        SET budget = %s
+        WHERE month = %s AND category = %s
     """, (budget, month, category))
     
     conn.commit()
@@ -229,8 +229,8 @@ def update_budget_by_id(budget_id, month, category, budget):
     
     cursor.execute("""
         UPDATE budgets
-        SET month = ?, category = ?, budget = ?
-        WHERE id = ?
+        SET month = %s, category = %s, budget = %s
+        WHERE id = %s
     """, (month, category, budget, budget_id))
     
     conn.commit()
@@ -246,7 +246,7 @@ def delete_budget_by_id(budget_id):
     
     cursor.execute("""
         DELETE FROM budgets
-        WHERE id = ?
+        WHERE id = %s
     """, (budget_id,))
     
     conn.commit()
@@ -266,7 +266,7 @@ def get_month_summary(month):
             SUM(CASE WHEN kind = '支出' THEN amount ELSE 0 END),
             COUNT(*)
         FROM records
-        WHERE date LIKE ?
+        WHERE date LIKE %s
     """, (month + "-%",))
     
     result = cursor.fetchone()
@@ -292,7 +292,7 @@ def get_category_month(month):
     cursor.execute("""
         SELECT category, SUM(amount)
         FROM records
-        WHERE date LIKE ? AND kind = ?
+        WHERE date LIKE %s AND kind = %s
         GROUP BY category
         ORDER BY category
     """, (month + "-%", "支出"))
@@ -319,7 +319,7 @@ def get_budget_category_month(month):
     cursor.execute("""
         SELECT category, budget
         FROM budgets
-        WHERE month = ?
+        WHERE month = %s
         ORDER BY category
     """, (month,))
     

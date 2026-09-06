@@ -1,20 +1,26 @@
-import sqlite3
+import os
 
-DB_NAME = "kakeibo_practice.db"
+import psycopg
+
 SCHEMA_FILE = "schema.sql"
 
 def init_db():
     """
-    shema.sqlを読み込み、データベースのテーブルを作成する。
+    schema.sq;を読み込み、
+    PostgreSQLに必要なテーブルを作成する。
     """
-    conn = sqlite3.connect(DB_NAME)
+    database_url = os.environ["DATABASE_URL"]
     
     with open(SCHEMA_FILE, "r", encoding="utf-8") as file:
-        schema = file.read()
+        schema_sql = file.read()
         
-    conn.executescript(schema)
-    
-    conn.close()
+    with psycopg.connect(database_url) as conn:
+        with conn.cursor() as cursor:
+            for statement in schema_sql.split(";"):
+                statement = statement.strip()
+                
+                if statement:
+                    cursor.execute(statement)
     
     print("データベースを初期化しました。")
     
