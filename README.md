@@ -1,9 +1,17 @@
 # 家計簿アプリ
-FlaskとSQLiteを使用して作成した、家計簿管理用のWebアプリケーションです。
+FlaskとPostgreSQLを使用して作成した、家計簿管理用のWebアプリケーションです。
 
 収入・支出の記録だけでなく、月ごとの収支集計、カテゴリ別支出集計、予算管理、予算と支出の比較を行えます。
 
 集計結果は表だけでなく、Matplotlibを使用したグラフでも確認できます。
+
+## 公開URL
+
+Renderで公開しています。
+
+https://kakeibo-web-jqqx.onrender.com
+
+※ RenderのFreeプランを利用しているため、アクセス時に起動まで時間がかかる場合があります。
 
 ## 主な機能
 
@@ -35,13 +43,43 @@ FlaskとSQLiteを使用して作成した、家計簿管理用のWebアプリケ
 - スマートフォンなどの狭い画面に対応したレスポンシブ表示
 
 ## 使用技術
+
+### アプリケーション
 - Python
-- Flask 3.1.3
-- SQLite
+- Flask
+- PostgreSQL
+- psycopg
 - HTML
 - CSS
-- Jinja
-- Matplotlib 3.11.0
+- Matplotlib
+
+### テスト
+- pytest
+
+### デプロイ・運用
+- Gunicorn
+- Render
+
+### 開発・バージョン管理
+- Git
+- GitHub
+
+## デプロイ構成
+本番環境では、Render上でFlaskアプリを公開し、PostgreSQLデータベースに接続しています。
+
+```text
+ブラウザ
+  ↓
+Render Web Service
+  ↓
+Gunicorn
+  ↓
+Flask
+  ↓
+Render PostgreSQL
+```
+
+データベース接続先は環境変数`DATABASE_URL`から取得し、ローカル環境と本番環境で接続先を切り替えています。
 
 ## ディレクトリ構成
 
@@ -54,18 +92,25 @@ KAKEIBO_WEB/
 ├── README.md            # プロジェクトの説明
 ├── .gitignore           # Gitで管理しないファイルの設定
 ├── templates/           # HTMLテンプレート
+├── fonts/
+│   ├── NotoSansJP.ttf   # Matplotlibの日本語表示用フォント
+│   └── OFL.txt          # Noto Sans JPのライセンス
+├── tests/
+│   └── test_app.py      # テストを行うファイル
+├── docs/
+│   └── images/          # テスト用の画像を置く場所
 └── static/              # CSSや画像などの静的ファイル
     ├── css/
     │   └── style.css    # スタイルシート
     └── graphs/          # グラフ画像などを保存するディレクトリ
 ```
 
-## セットアップ
+## ローカル環境でのセットアップ
 
 ### 1. リポジトリを取得する
 ```powershell
-git clone <リポジトリURL>
-cd KAKEIBO_WEB
+git clone https://github.com/yinaka09-beep/kakeibo-web
+cd kakeibo-web
 ```
 
 ### 2. 仮想環境を作成する
@@ -85,40 +130,40 @@ py -m venv .venv
 pip install -r requirements.txt
 ```
 
-### 5. データベースを作成する
+### 5. PostgreSQLにデータベースを作成
+PostgreSQLにアプリ用のデータベースを用意します。
+
+### 6. データベース接続先を設定
+```powershell
+$env:DATABASE_URL="postgresql://ユーザー名:パスワード@localhost:5432/データベース名"
+```
+
+### 7. テーブルを作成
+
 ```powershell
 py init_db.py
 ```
+`records`テーブルと`budgets`テーブルが作成されます。
 
-schema.sqlをもとに、家計簿データ用のrecordsテーブルと予算データ用のbudgetsテーブルが作成されます。
-
-### 6. アプリを起動する
+### 8. アプリを起動
 ```powershell
 py app.py
 ```
 
-起動後、ターミナルに表示されるURLをブラウザで開きます。
-
 ## テスト
-このプロジェクトでは、pytestを使用して基本的な自動テストを実装しています。
+テストでは、通常使用するデータベースとは別にテスト専用データベースを使用します。
 
-主に以下の内容を確認しています。
+※`DATABASE_URL`は、ローカル環境のセットアップで設定した状態で実行します。
 
-- 主要ページが正常に表示されること
-- データベース初期化で必要なテーブルが作成されること
-- 家計簿データの登録・編集・削除
-- 予算データの登録・更新・編集・削除
-- 予算編集時の重複チェック
-- 予算と支出の比較処理
-- 予算比較グラフが正常に生成されること
-
-テストを実行するには、プロジェクトのルートディレクトリで以下を実行します。
+```powershell
+$env:TEST_DATABASE_URL="postgresql://ユーザー名:パスワード@localhost:5432/テスト用データベース名"
 
 py -m pytest
+```
 
-すべてのテストが成功すると、ターミナルにpassedと表示されます
+現在、家計簿・予算のCRUD、集計処理、グラフ生成などの自動テストを実装しています。
 
-##　使い方
+## 使い方
 トップページから各機能へ移動できます。
 
 家計簿データを登録すると、登録した内容の一覧表示や編集・削除ができます。
@@ -151,6 +196,12 @@ py -m pytest
 
 ![予算と支出の比較](docs/images/budget-comparison.png)
 
+## フォントライセンス
+
+グラフの日本語表示には Noto Sans JP を使用しています。
+
+Noto Sans JP is licensed under the SIL Open Font License 1.1.
+
 ## 今後の予定
-- Web上へのデプロイ
+- Dockerによるコンテナ化
 
