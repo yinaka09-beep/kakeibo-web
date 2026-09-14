@@ -157,7 +157,9 @@ py app.py
 
 ```powershell
 $env:TEST_DATABASE_URL="postgresql://ユーザー名:パスワード@localhost:5432/テスト用データベース名"
+```
 
+```powershell
 py -m pytest
 ```
 
