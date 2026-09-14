@@ -20,3 +20,5 @@ Thumbs.db
 
 # pytestで自動的に作られるキャッシュフォルダ
 .pytest_cache/
+
+desktop.ini

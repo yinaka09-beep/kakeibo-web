@@ -6,10 +6,25 @@ import matplotlib
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
+from matplotlib import font_manager
 
 from flask import Flask, render_template, request, redirect, url_for
 
-plt.rcParams["font.family"] = "Meiryo"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+FONT_PATH = os.path.join(
+    BASE_DIR,
+    "fonts",
+    "NotoSansJP.ttf"
+)
+
+font_manager.fontManager.addfont(FONT_PATH)
+
+font_name = font_manager.FontProperties(
+    fname=FONT_PATH
+).get_name()
+
+plt.rcParams["font.family"] = font_name
 plt.rcParams["axes.unicode_minus"] = False
 
 GRAPH_FOLDER = os.path.join("static", "graphs")
