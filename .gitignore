@@ -22,3 +22,5 @@ Thumbs.db
 .pytest_cache/
 
 desktop.ini
+
+.env

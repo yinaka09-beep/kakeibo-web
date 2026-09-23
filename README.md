@@ -204,6 +204,49 @@ py -m pytest
 
 Noto Sans JP is licensed under the SIL Open Font License 1.1.
 
-## 今後の予定
-- Dockerによるコンテナ化
+## Dockerによる起動
+
+Docker Desktopが利用できる環境では、FlaskアプリとPostgreSQLをDocker Composeでまとめて起動できます。
+
+### 1.環境変数を設定
+
+`.env.example`を参考に、プロジェクトルートへ`.env`を作成します。
+
+POSTGRES_USER=kakeibo_user
+POSTGRES_PASSWORD=任意のパスワード
+POSTGRES_DB=kakeibo
+
+`.env`にはデータベースの認証情報が含まれるため、Git管理の対象外としています。
+
+### 2.コンテナを起動
+```powershell
+docker compose up --build
+```
+
+起動後、ブラウザで以下へアクセスします。
+http://localhost:8000
+
+Docker Composeでは、以下の構成で動作します。
+ブラウザ
+　↓
+Flask / Gunicorn　コンテナ
+　↓
+PostgreSQL コンテナ
+　↓
+Docker Volume
+
+PostgreSQLのデータはDocker Volumeに保存されるため、通常の`docker compose down`でコンテナを削除しても保持されます。
+
+### 3.コンテナを停止
+```powershell
+docker compose down
+```
+
+Docker Volumeも含めて削除する場合は、以下を使用します。
+```powershell
+docker compose down -v
+```
+
+`-v`を指定すると、PostgreSQLのデータも削除されるため、注意してください。
+
 
