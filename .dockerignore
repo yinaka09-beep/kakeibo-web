@@ -3,5 +3,7 @@ __pycache__
 .pytest_cache
 .git
 .gitignore
-kakeibo_practice.db
 .env
+*.db
+*.pyc
+static/graphs/*.png

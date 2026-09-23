@@ -59,6 +59,8 @@ https://kakeibo-web-jqqx.onrender.com
 ### デプロイ・運用
 - Gunicorn
 - Render
+- Docker
+- Docker Compose
 
 ### 開発・バージョン管理
 - Git
@@ -89,6 +91,10 @@ KAKEIBO_WEB/
 ├── init_db.py           # データベース初期化用スクリプト
 ├── schema.sql           # データベースのテーブル定義
 ├── requirements.txt     # 使用するPythonライブラリ一覧
+├── Dockerfile           # Webアプリ用Dockerイメージの定義
+├── compose.yaml         # FlaskとPostgreSQLのCompose構成
+├── .dockerignore        # Dockerイメージに含めないファイルの設定
+├── .env.exmaole         # Docker起動用の環境変数例
 ├── README.md            # プロジェクトの説明
 ├── .gitignore           # Gitで管理しないファイルの設定
 ├── templates/           # HTMLテンプレート
@@ -98,11 +104,12 @@ KAKEIBO_WEB/
 ├── tests/
 │   └── test_app.py      # テストを行うファイル
 ├── docs/
-│   └── images/          # テスト用の画像を置く場所
+│   └── images/          # README掲載用のスクリーンショット
 └── static/              # CSSや画像などの静的ファイル
     ├── css/
     │   └── style.css    # スタイルシート
     └── graphs/          # グラフ画像などを保存するディレクトリ
+
 ```
 
 ## ローカル環境でのセットアップ
@@ -163,7 +170,7 @@ $env:TEST_DATABASE_URL="postgresql://ユーザー名:パスワード@localhost:5
 py -m pytest
 ```
 
-現在、家計簿・予算のCRUD、集計処理、グラフ生成などの自動テストを実装しています。
+家計簿・予算のCRUD、集計処理、グラフ精製などを対象に16件の自動テストを実装し、すべて成功することを確認しています。
 
 ## 使い方
 トップページから各機能へ移動できます。
@@ -208,17 +215,18 @@ Noto Sans JP is licensed under the SIL Open Font License 1.1.
 
 Docker Desktopが利用できる環境では、FlaskアプリとPostgreSQLをDocker Composeでまとめて起動できます。
 
-### 1.環境変数を設定
+### 1. 環境変数を設定
 
 `.env.example`を参考に、プロジェクトルートへ`.env`を作成します。
-
+```env
 POSTGRES_USER=kakeibo_user
 POSTGRES_PASSWORD=任意のパスワード
 POSTGRES_DB=kakeibo
+```
 
 `.env`にはデータベースの認証情報が含まれるため、Git管理の対象外としています。
 
-### 2.コンテナを起動
+### 2. コンテナを起動
 ```powershell
 docker compose up --build
 ```
@@ -240,7 +248,7 @@ Docker Volume
 
 PostgreSQLのデータはDocker Volumeに保存されるため、通常の`docker compose down`でコンテナを削除しても保持されます。
 
-### 3.コンテナを停止
+### 3. コンテナを停止
 ```powershell
 docker compose down
 ```
