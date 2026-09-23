@@ -227,6 +227,8 @@ docker compose up --build
 http://localhost:8000
 
 Docker Composeでは、以下の構成で動作します。
+
+```text
 ブラウザ
 　↓
 Flask / Gunicorn　コンテナ
@@ -234,6 +236,7 @@ Flask / Gunicorn　コンテナ
 PostgreSQL コンテナ
 　↓
 Docker Volume
+```
 
 PostgreSQLのデータはDocker Volumeに保存されるため、通常の`docker compose down`でコンテナを削除しても保持されます。
 
