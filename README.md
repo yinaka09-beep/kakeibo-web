@@ -94,7 +94,7 @@ KAKEIBO_WEB/
 ├── Dockerfile           # Webアプリ用Dockerイメージの定義
 ├── compose.yaml         # FlaskとPostgreSQLのCompose構成
 ├── .dockerignore        # Dockerイメージに含めないファイルの設定
-├── .env.exmaole         # Docker起動用の環境変数例
+├── .env.example         # Docker起動用の環境変数例
 ├── README.md            # プロジェクトの説明
 ├── .gitignore           # Gitで管理しないファイルの設定
 ├── templates/           # HTMLテンプレート
@@ -170,7 +170,7 @@ $env:TEST_DATABASE_URL="postgresql://ユーザー名:パスワード@localhost:5
 py -m pytest
 ```
 
-家計簿・予算のCRUD、集計処理、グラフ精製などを対象に16件の自動テストを実装し、すべて成功することを確認しています。
+家計簿・予算のCRUD、集計処理、グラフ生成などを対象に16件の自動テストを実装し、すべて成功することを確認しています。
 
 ## 使い方
 トップページから各機能へ移動できます。
